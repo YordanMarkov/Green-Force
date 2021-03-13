@@ -25,7 +25,7 @@ cities = {
         'waqi': 'sofia'
     },
     'new_york': {
-        'weather': 5039192,
+        'weather': 5128594,
         'waqi': 'newyork'
     },
     'sydney': {
