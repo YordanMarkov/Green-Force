@@ -28,12 +28,8 @@ cities = {
         'weather': 5039192,
         'waqi': 'newyork'
     },
-    'cairo': {
-        'weather': 5111056,
-        'waqi': 'cairo'
-    },
     'sydney': {
-        'weather': 6160752,
+        'weather': 2147714,
         'waqi': 'sydney'
     },
     'tokyo': {
@@ -54,6 +50,7 @@ cities = {
 def get_weather(city='sofia'):
     APIKEY = 'be33ea2b313dc9a0720ba44df2ac8d5e'
     id = cities[city]['weather']
+    print('http://api.openweathermap.org/data/2.5/weather?id={}&units=metric&appid={}'.format(id, APIKEY))
     data = requests.get('http://api.openweathermap.org/data/2.5/weather?id={}&units=metric&appid={}'.format(id, APIKEY))
     data.raise_for_status()
     return data.json()
@@ -62,6 +59,7 @@ def get_weather(city='sofia'):
 def wagi_data(city='sofia'):
     TOKEN = 'f6160ea3cb21c32e1e136b2f306fabbb44980b15'
     id = cities[city]['waqi']
+    print('https://api.waqi.info/feed/{}/?token={}'.format(id, TOKEN))
     data = requests.get('https://api.waqi.info/feed/{}/?token={}'.format(id, TOKEN))
     data.raise_for_status()
     return data.json()
@@ -74,6 +72,7 @@ class DataResource(object):
             city = req.params['city']
         print(city)
         weather = get_weather(city)
+        print(weather)
         wagi = wagi_data(city)
         print(wagi)
         try:
