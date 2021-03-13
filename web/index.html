@@ -15,7 +15,7 @@
   <table style='width: 100%; border-collapse: collapse;'>
     <tr>
       <td style="width: 200px;"><img src="web/GreenForce_Logo_2.png" style="width:200px;"/></td>
-      <td style="width: 400px;text-align:center; opacity: 0.7">
+      <td style="width: 400px;text-align:center; opacity: 0.7; padding-right: 350px">
           <select name="city" id="city">
             <option id="paris">Paris</option>
             <option id="london">London</option>
@@ -28,7 +28,7 @@
             <option id="hong_kong">Hong Kong</option>
           </select>
       </td>
-      <td style="border-radius: 15px; background: silver; text-align: center; align: right; padding: 10px; width: 200px; opacity: 0.8;">INFO SITE</td>
+      <!--<td style="border-radius: 15px; background: silver; text-align: center; align: right; padding: 10px; width: 200px; opacity: 0.8;">INFO SITE</td>-->
     </tr>
   </table>
 
@@ -37,33 +37,33 @@
       <td style="vertical-align:top; width: 400px;">
         <table style='border-collapse: collapse;width: 100%'>
           <tr>
-            <th colspan="2" style="color:white;border-radius: 5px;">Данни за качеството на въздуха</th>
+            <th colspan="2" style="color:white;border-radius: 5px; font-weight: bold; font-family:verdana;">Данни за качеството на въздуха</th>
           </tr>
-          <tr style="background-color: white;opacity: 0.7;">
+          <tr style="background-color: white;opacity: 0.7; font-weight: bold; font-family:verdana;">
             <td>Влажност</td>
             <td><label id="hum"></label> %</td>
           </tr>
-          <tr style="background-color: white;opacity: 0.7;">
+          <tr style="background-color: white;opacity: 0.7; font-weight: bold; font-family:verdana;">
             <td>Налягане</td>
             <td><label id="pre"></label> hPa</td>
           </tr>
-          <tr id="tr_aqi" style="background-color: white;opacity: 0.7;">
+          <tr id="tr_aqi" style="background-color: white;opacity: 0.7; font-weight: bold; font-family:verdana;">
             <td>Въздушен индекс(AQI)</td>
             <td><label id="aqi"></label></td>
           </tr>
-          <tr id="tr_o3" style="background-color: white;opacity: 0.7;">
+          <tr id="tr_o3" style="background-color: white;opacity: 0.7; font-weight: bold; font-family:verdana;">
             <td>Озон</td>
             <td><label id="o3"></label></td>
           </tr>
-          <tr id="tr_pm10" style="background-color: white;opacity: 0.7;">
+          <tr id="tr_pm10" style="background-color: white;opacity: 0.7; font-weight: bold; font-family:verdana;">
             <td>PM10</td>
             <td><label id="pm10"></label> &#956;g/m&#179;</td>
           </tr>
-          <tr id="tr_pm2_5" style="background-color: white;opacity: 0.7;">
+          <tr id="tr_pm2_5" style="background-color: white;opacity: 0.7; font-weight: bold; font-family:verdana;">
             <td>PM 2.5</td>
             <td><label id="pm2_5"></label> &#956;g/m&#179;</td>
           </tr>
-          <tr id="tr_no2" style="background-color: white;opacity: 0.7;">
+          <tr id="tr_no2" style="background-color: white;opacity: 0.7; font-weight: bold; font-family:verdana;">
             <td>Азотен диоксид (NO2)</td>
             <td><label id="no2"></label> &#956;g/m&#179;</td>
           </tr>
@@ -71,10 +71,10 @@
         <br>
         <table style='border-collapse: collapse;width: 100%'>
           <tr>
-            <th style="color:white;border-radius: 5px;">Препоръки</th>
+            <th style="color:white;border-radius: 5px; font-weight: bold; font-family:verdana;">Препоръки</th>
           </tr>
           <tr style="background-color: white;opacity: 0.7;">
-            <td id="recommend" style="height: 300px; vertical-align: top">
+            <td id="recommend" style="height: 280px; vertical-align: top; font-family:verdana; font-weight: bold; font-size: 20px">
 
             </td>
           </tr>
@@ -83,20 +83,20 @@
       <td style="vertical-align:top; width: 800px;">
         <table style='border-collapse: collapse; width: 100%'>
           <tr>
-            <th style="color:white;border-radius: 5px;">Основни причини</th>
+            <th style="color:white;border-radius: 5px; font-weight: bold; font-family:verdana;">Основни причини</th>
           </tr>
           <tr style="background-color: white;opacity: 0.7;">
-            <td id="reasons" style="height: 300px; vertical-align: top">
+            <td id="reasons" style="height: 300px; vertical-align: top; font-family:verdana; font-weight: bold; font-size: 20px">
             </td>
           </tr>
         </table>
         <br>
         <table style='border-collapse: collapse; width: 100%'>
           <tr>
-            <th style="color:white;border-radius: 5px;">Заболявания/Последствия за здравето</th>
+            <th style="color:white;border-radius: 5px; font-weight: bold; font-family:verdana;">Заболявания/Последствия за здравето</th>
           </tr>
           <tr style="background-color: white;opacity: 0.7;">
-            <td id="health" style="height: 300px; vertical-align: top">
+            <td id="health" style="height: 300px; vertical-align: top; font-family:verdana; font-weight: bold; font-size: 20px">
             </td>
           </tr>
         </table>
@@ -104,11 +104,11 @@
       <td style="vertical-align:top;">
         <table style='border-collapse: collapse; width: 100%'>
           <tr>
-            <th style="color:white;border-radius: 5px;">Кампании</th>
+            <th style="color:white;border-radius: 5px; font-weight: bold; font-family:verdana;">Кампании</th>
           </tr>
-          <tr style="background-color: white;opacity: 0.7;">
-            <td id="actions" style="height: 680px; vertical-align: top;">
-
+          <tr style="background-color: white;opacity: 0.7; font-weight: bold; font-family:verdana; font-size:30px;">
+            <td style="height: 680px; vertical-align: top;">
+              <a href = "https://greenbalkans.org/"; style="text-decoration: none; color: #1F8E61;">Green Balkans - Пловдив, България</a>
             </td>
           </tr>
         </table>

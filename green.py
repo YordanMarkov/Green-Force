@@ -96,6 +96,7 @@ class DataResource(object):
             'health': '',
             'background': '/web/background/womple_new_background.png'
         }
+
         if 'o3' in wagi['data']['iaqi']:
             data['o3'] = wagi['data']['iaqi']['o3']['v']
         if 'pm10' in wagi['data']['iaqi']:
@@ -172,7 +173,7 @@ api.add_sink(HtmlAdapter(), '/web')
 
 if __name__ == '__main__':
     ip = "0.0.0.0"
-    port = 8000
+    port = 6868
     print("Start server at {}:{}".format(ip, port))
     httpd = simple_server.make_server(ip, port, api)
     httpd.serve_forever()
