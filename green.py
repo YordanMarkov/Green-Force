@@ -7,30 +7,82 @@ import sys
 import json
 import requests
 
-# city = []
-# for line in open('city.txt').readlines():
-#     city.append(line.strip('\n'))
+cities = {
+    'Paris': {
+        'weather': 2968815,
+        'waqi': 'paris'
+    },
+    'London': {
+        'weather': 1006984,
+        'waqi': 'london'
+    },
+    'Rio de Janeiro': {
+        'weather': 3469034,
+        'waqi': 'brazil'
+    },
+    'Sofia': {
+        'weather': 727011,
+        'waqi': 'sofia'
+    },
+    'New York': {
+        'weather': 5039192,
+        'waqi': 'newyork'
+    },
+    'Cairo': {
+        'weather': 5111056,
+        'waqi': 'cairo'
+    },
+    'Sydney': {
+        'weather': 6160752,
+        'waqi': 'sydney'
+    },
+    'Tokyo': {
+        'weather': 1850144,
+        'waqi': 'tokyo'
+    },
+    #'Moscow': {
+     #   'weather': ,
+     #   'waqi': 'moscow'
+    #},
+    'Hong Kong': {
+        'weather': 1819729,
+        'waqi': 'hongkong'
+    },
+
+
+}
+    #             <option>London</option>
+    #             <option>Rio de Janeiro</option>
+    #             <option selected="selected">Sofia</option>
+    #             <option>New York</option>
+    #             <option>Cairo</option>
+    #             <option>Sydney</option>
+    #             <option>Tokyo</option>
+    #             <option>Moscow</option>
+    #             <option>Hong Kong</option>
+
 
 def get_weather(city='sofia'):
     APIKEY = 'be33ea2b313dc9a0720ba44df2ac8d5e'
-    data = requests.get('http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid={}'.format(city, APIKEY))
+    id = cities[city]['weather']
+    data = requests.get('http://api.openweathermap.org/data/2.5/weather?id={}&units=metric&appid={}'.format(id, APIKEY))
     data.raise_for_status()
     return data.json()
 
 
 def wagi_data(city='sofia'):
     TOKEN = 'f6160ea3cb21c32e1e136b2f306fabbb44980b15'
-    data = requests.get('https://api.waqi.info/feed/{}/?token={}'.format(city, TOKEN))
+    id = cities[city]['waqi']
+    data = requests.get('https://api.waqi.info/feed/{}/?token={}'.format(id, TOKEN))
     data.raise_for_status()
     return data.json()
 
 
 class DataResource(object):
     def on_get(self, req, resp):
-        city='sofia'
+        city='Sofia'
         if 'city' in req.params:
             city = req.params['city']
-        city = city.lower().replace(' ', '_')
         weather = get_weather(city)
         wagi = wagi_data(city)
         print(city)
