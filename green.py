@@ -8,58 +8,47 @@ import json
 import requests
 
 cities = {
-    'Paris': {
+    'paris': {
         'weather': 2968815,
         'waqi': 'paris'
     },
-    'London': {
+    'london': {
         'weather': 1006984,
         'waqi': 'london'
     },
-    'Rio de Janeiro': {
+    'rio_de_janeiro': {
         'weather': 3469034,
         'waqi': 'brazil'
     },
-    'Sofia': {
+    'sofia': {
         'weather': 727011,
         'waqi': 'sofia'
     },
-    'New York': {
+    'new_york': {
         'weather': 5039192,
         'waqi': 'newyork'
     },
-    'Cairo': {
+    'cairo': {
         'weather': 5111056,
         'waqi': 'cairo'
     },
-    'Sydney': {
+    'sydney': {
         'weather': 6160752,
         'waqi': 'sydney'
     },
-    'Tokyo': {
+    'tokyo': {
         'weather': 1850144,
         'waqi': 'tokyo'
     },
-    #'Moscow': {
-     #   'weather': ,
-     #   'waqi': 'moscow'
-    #},
-    'Hong Kong': {
+    'moscow': {
+        'weather': 6198441,
+        'waqi': 'moscow'
+    },
+    'hong_kong': {
         'weather': 1819729,
         'waqi': 'hongkong'
     },
-
-
 }
-    #             <option>London</option>
-    #             <option>Rio de Janeiro</option>
-    #             <option selected="selected">Sofia</option>
-    #             <option>New York</option>
-    #             <option>Cairo</option>
-    #             <option>Sydney</option>
-    #             <option>Tokyo</option>
-    #             <option>Moscow</option>
-    #             <option>Hong Kong</option>
 
 
 def get_weather(city='sofia'):
@@ -80,12 +69,12 @@ def wagi_data(city='sofia'):
 
 class DataResource(object):
     def on_get(self, req, resp):
-        city='Sofia'
+        city = 'sofia'
         if 'city' in req.params:
             city = req.params['city']
+        print(city)
         weather = get_weather(city)
         wagi = wagi_data(city)
-        print(city)
         print(wagi)
         try:
             aqi = int(wagi['data']['aqi'])
@@ -99,11 +88,13 @@ class DataResource(object):
             'pre': weather['main']['pressure'],
             'hum': weather['main']['humidity'],
             'aqi': aqi,
+            'no2': 0,
             'o3': 0,
             'pm10': 0,
-            'pm25': 0,
+            'pm2_5': 0,
             'recommend': '',
             'reasons': '',
+            'health': '',
             'background': '/web/background/womple_new_background.png'
         }
         if 'o3' in wagi['data']['iaqi']:
@@ -115,33 +106,33 @@ class DataResource(object):
         if 'no2' in wagi['data']['iaqi']:
             data['no2'] = wagi['data']['iaqi']['no2']['v']
         if data['o3'] >= 120:
-            data['recommend'] += 'Излез навън, само ако е наложително!'
-            data['reasons'] += 'Взаимодействието на азотните оксиди и летливите органични съединения под влияние на високи температури и слънчева светлина'
-            data['reasons'] += 'Възпрепятства доставката на кислород от хемоглобина до тъканите, в по-висока концентрация задушаване, кома или смърт.'
+            data['recommend'] += 'Излез навън, само ако е наложително!<br>'
+            data['reasons'] += 'Взаимодействието на азотните оксиди и летливите органични съединения под влияние на високи температури и слънчева светлина<br>'
+            data['health'] += 'Възпрепятства доставката на кислород от хемоглобина до тъканите, в по-висока концентрация задушаване, кома или смърт.<br>'
         if data['pm10'] >= 50:
-            data['recommend'] += 'Сложете маска с филтър, ако излизате навън!'
-            data['reasons'] += 'Стопанска дейност, транспорт, отопление, селско стопанство, строителство, офис оборудване'
-            data['reasons'] += 'засилването на алергиите, асматични пристъпи, дихателни смущения, рак на белия дроб'
-        if data['pm25'] >= 25:
-            data['recommend'] += 'Сложете маска с филтър, ако излизате навън!'
-            data['reasons'] += 'Стопанска дейност, транспорт, отопление, селско стопанство, строителство, офис оборудване'
-            data['reasons'] += 'засилването на алергиите, асматични пристъпи, дихателни смущения, рак на белия дроб'
+            data['recommend'] += 'Сложете маска с филтър, ако излизате навън!<br>'
+            data['reasons'] += 'Стопанска дейност, транспорт, отопление, селско стопанство, строителство, офис оборудване<br>'
+            data['health'] += 'Засилването на алергиите, асматични пристъпи, дихателни смущения, рак на белия дроб<br>'
+        if data['pm2_5'] >= 25:
+            data['recommend'] += 'Сложете маска с филтър, ако излизате навън!<br>'
+            data['reasons'] += 'Стопанска дейност, транспорт, отопление, селско стопанство, строителство, офис оборудване<br>'
+            data['health'] += 'Засилването на алергиите, асматични пристъпи, дихателни смущения, рак на белия дроб<br>'
         if data['no2'] >= 200:
-            data['recommend'] += 'Не използвай кола, качи се на градския транспорт! Не стой в близост до тютюнопушачи!'
-            data['reasons'] += 'Моторните превозни средства (МПС), топлоелектрическите централи (ТЕЦ), някои промишлени предприятия, тютюнопушенето'
-            data['reasons'] += 'Структурни промени в белия дроб'
+            data['recommend'] += 'Не използвай кола, качи се на градския транспорт! Не стой в близост до тютюнопушачи!<br>'
+            data['reasons'] += 'Моторните превозни средства (МПС), топлоелектрическите централи (ТЕЦ), някои промишлени предприятия, тютюнопушенето<br>'
+            data['health'] += 'Структурни промени в белия дроб<br>'
         if data['aqi'] > 0 and data['aqi'] <= 50:
-            data['recommend'] += 'Няма опасност за здравето ти!'
+            data['recommend'] += 'Няма опасност за здравето ти!<br>'
         if data['aqi'] > 50 and data['aqi'] <= 100:
-            data['recommend'] += 'Въздухът е сравнително чист, но все пак има малка опасност!'
+            data['recommend'] += 'Въздухът е сравнително чист, но все пак има малка опасност!<br>'
         if data['aqi'] > 100 and data['aqi'] <= 150:
-            data['recommend'] += 'Ако имаш заболявания, стой си вкъщи!'
+            data['recommend'] += 'Ако имаш заболявания, стой си вкъщи!<br>'
         if data['aqi'] > 150 and data['aqi'] <= 200:
-            data['recommend'] += 'Излез навън, само ако е наложително!'
+            data['recommend'] += 'Излез навън, само ако е наложително!<br>'
         if data['aqi'] > 200 and data['aqi'] <= 300:
-            data['recommend'] += 'Сложете маска с филтър, ако излизате навън и то само ако е наложително!'
+            data['recommend'] += 'Сложете маска с филтър, ако излизате навън и то само ако е наложително!<br>'
         if data['aqi'] > 300 and data['aqi'] <= 500:
-            data['recommend'] += 'Стой вкъщи задължително!'
+            data['recommend'] += 'Стой вкъщи задължително!<br>'
         if os.path.exists('web/background/womple_{}.png'.format(city)):
             data['background'] = '/web/background/womple_{}.png'.format(city)
         resp.body = json.dumps(data)

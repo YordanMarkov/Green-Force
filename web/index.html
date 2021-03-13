@@ -17,16 +17,16 @@
       <td style="width: 200px;"><img src="web/GreenForce_Logo_2.png" style="width:200px;"/></td>
       <td style="width: 400px;text-align:center; opacity: 0.7">
           <select name="city" id="city">
-            <option>Paris</option>
-            <option>London</option>
-            <option>Rio de Janeiro</option>
-            <option selected="selected">Sofia</option>
-            <option>New York</option>
-            <option>Cairo</option>
-            <option>Sydney</option>
-            <option>Tokyo</option>
-            <option>Moscow</option>
-            <option>Hong Kong</option>
+            <option id="paris">Paris</option>
+            <option id="london">London</option>
+            <option id="rio_de_janeiro">Rio de Janeiro</option>
+            <option id="sofia" selected="selected">Sofia</option>
+            <option id="new_york">New York</option>
+            <option id="cairo">Cairo</option>
+            <option id="sydney">Sydney</option>
+            <option id="tokyo">Tokyo</option>
+            <option id="moscow">Moscow</option>
+            <option id="hong_kong">Hong Kong</option>
           </select>
       </td>
       <td style="border-radius: 15px; background: silver; text-align: center; align: right; padding: 10px; width: 200px; opacity: 0.8;">INFO SITE</td>
@@ -81,14 +81,23 @@
           </tr>
         </table>
       </td>
-      <td style="vertical-align:top;">
+      <td style="vertical-align:top; width: 800px;">
         <table style='border-collapse: collapse; width: 100%'>
           <tr>
             <th style="color:white;border-radius: 5px;">Основни причини</th>
           </tr>
           <tr style="background-color: white;opacity: 0.7;">
-            <td id="reasons" style="height: 700px; vertical-align: top">
-
+            <td id="reasons" style="height: 300px; vertical-align: top">
+            </td>
+          </tr>
+        </table>
+        <br>
+        <table style='border-collapse: collapse; width: 100%'>
+          <tr>
+            <th style="color:white;border-radius: 5px;">Заболявания/Последствия за здравето</th>
+          </tr>
+          <tr style="background-color: white;opacity: 0.7;">
+            <td id="health" style="height: 300px; vertical-align: top">
             </td>
           </tr>
         </table>
@@ -99,7 +108,7 @@
             <th style="color:white;border-radius: 5px;">Кампании</th>
           </tr>
           <tr style="background-color: white;opacity: 0.7;">
-            <td id="actions" style="height: 700px; vertical-align: top;">
+            <td id="actions" style="height: 680px; vertical-align: top;">
 
             </td>
           </tr>
@@ -123,7 +132,7 @@
   <script>
 	function reload_data() {
 	  var request = new XMLHttpRequest()
-	  request.open('GET', 'http://' + location.host + '/data?city=' + $("#city").val(), true)
+	  request.open('GET', 'http://' + location.host + '/data?city=' + $("#city").find('option:selected').attr('id'), true)
 	  request.onload = function() {
 	    if (request.status >= 200 && request.status < 400) {
 	      var data = JSON.parse(this.response)
@@ -136,6 +145,7 @@
 	      document.getElementById('weather_image').src = data['img']
 	      document.getElementById("temp").innerHTML = data["temp"]
 	      document.getElementById("reasons").innerHTML = data["reasons"]
+	      document.getElementById("health").innerHTML = data["health"]
 	      document.getElementById("recommend").innerHTML = data["recommend"]
 	      document.getElementById("no2").innerHTML = data["no2"]
 	      document.getElementById("tr_pm2_5").style.backgroundColor = 'white'
