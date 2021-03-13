@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<head>
+  <meta content="text/html; charset=cp1251" http-equiv="Content-Type">
+  <title>GreenForce</title>
+  <link rel="stylesheet" type="text/css" href="web/jquery-ui.min.css"/>
+  <style>
+    th { text-align: center; font-size: 18px; background-color: #73AD21; padding: 10px;}
+    tr, td { padding: 10px }
+    body { font-family:helvetica; }
+  </style>
+  <script type="text/javascript" src="web/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="web/jquery-ui.min.js"></script>
+</head>
+<body style='height: 100%;margin: 0;background-size: cover; -ms-background-size: cover; -o-background-size: cover; -moz-background-size: cover; -webkit-background-size: cover; background-image: url(/web/background.png)'>
+  <table style='width: 100%; border-collapse: collapse;'>
+    <tr>
+      <td style="width: 200px;"><img src="web/GreenForce_Logo_2.png" style="width:200px;"/></td>
+      <td style="width: 400px;text-align:center; opacity: 0.7">
+          <select name="city" id="city">
+            <option>Paris</option>
+            <option>London</option>
+            <option>Rio de Janeiro</option>
+            <option selected="selected">Sofia</option>
+            <option>New York</option>
+            <option>Cairo</option>
+            <option>Sydney</option>
+            <option>Tokyo</option>
+            <option>Moscow</option>
+            <option>Hong Kong</option>
+          </select>
+      </td>
+      <td style="border-radius: 15px; background: silver; text-align: center; align: right; padding: 10px; width: 200px; opacity: 0.8;">INFO SITE</td>
+    </tr>
+  </table>
+
+  <table style='width: 100%; border-collapse: collapse;' cellpadding="20px">
+    <tr>
+      <td style="vertical-align:top; width: 400px;">
+        <table style='border-collapse: collapse;width: 100%'>
+          <tr>
+            <th colspan="2" style="color:white;border-radius: 5px;">Данни за качеството на въздуха</th>
+          </tr>
+          <tr style="background-color: white;opacity: 0.7;">
+            <td>Влажност</td>
+            <td><label id="hum"></label> %</td>
+          </tr>
+          <tr style="background-color: white;opacity: 0.7;">
+            <td>Налягане</td>
+            <td><label id="pre"></label> hPa</td>
+          </tr>
+          <tr id="tr_aqi" style="background-color: white;opacity: 0.7;">
+            <td>Въздушен индекс(AQI)</td>
+            <td><label id="aqi"></label></td>
+          </tr>
+          <tr id="tr_o3" style="background-color: white;opacity: 0.7;">
+            <td>Озон</td>
+            <td><label id="o3"></label></td>
+          </tr>
+          <tr id="tr_pm10" style="background-color: white;opacity: 0.7;">
+            <td>PM10</td>
+            <td><label id="pm10"></label> &#956;g/m&#179;</td>
+          </tr>
+          <tr id="tr_pm2_5" style="background-color: white;opacity: 0.7;">
+            <td>PM 2.5</td>
+            <td><label id="pm2_5"></label> &#956;g/m&#179;</td>
+          </tr>
+          <tr id="tr_no2" style="background-color: white;opacity: 0.7;">
+            <td>Азотен диоксид (NO2)</td>
+            <td><label id="no2"></label> &#956;g/m&#179;</td>
+          </tr>
+        </table>
+        <br>
+        <table style='border-collapse: collapse;width: 100%'>
+          <tr>
+            <th style="color:white;border-radius: 5px;">Препоръки</th>
+          </tr>
+          <tr style="background-color: white;opacity: 0.7;">
+            <td id="recommend" style="height: 300px; vertical-align: top">
+
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td style="vertical-align:top;">
+        <table style='border-collapse: collapse; width: 100%'>
+          <tr>
+            <th style="color:white;border-radius: 5px;">Основни причини</th>
+          </tr>
+          <tr style="background-color: white;opacity: 0.7;">
+            <td id="reasons" style="height: 700px; vertical-align: top">
+
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td style="vertical-align:top;">
+        <table style='border-collapse: collapse; width: 100%'>
+          <tr>
+            <th style="color:white;border-radius: 5px;">Кампании</th>
+          </tr>
+          <tr style="background-color: white;opacity: 0.7;">
+            <td id="actions" style="height: 700px; vertical-align: top;">
+
+            </td>
+          </tr>
+        </table>
+    </tr>
+  </table>
+
+  <div style="position: absolute; bottom: 1px; left: 1px;">
+    <table style='width: 100%; border-collapse: collapse;'>
+    <tr>
+      <td style="vertical-align:center;">
+        <img id="weather_image" src="https://cdn1.iconfinder.com/data/icons/weather-filled-two-color/614/429_-_Sunny-512.png" style="width:150px;height:150px;"/>
+      </td>
+      <td style="width: 200px;font-size: 40px;color:white;font-weight: bold;">
+        <label id="temp">..</label> &#8451;
+      </td>
+    </tr>
+    </table>
+  </div>
+
+  <script>
+	function reload_data() {
+	  var request = new XMLHttpRequest()
+	  request.open('GET', 'http://' + location.host + '/data?city=' + $("#city").val(), true)
+	  request.onload = function() {
+	    if (request.status >= 200 && request.status < 400) {
+	      var data = JSON.parse(this.response)
+	      document.getElementById("pre").innerHTML = data["pre"]
+          document.getElementById("hum").innerHTML = data["hum"]
+	      document.getElementById("aqi").innerHTML = data["aqi"]
+	      document.getElementById("o3").innerHTML = data["o3"]
+          document.getElementById("pm10").innerHTML = data["pm10"]
+          document.getElementById("pm2_5").innerHTML = data["pm2_5"]
+	      document.getElementById('weather_image').src = data['img']
+	      document.getElementById("temp").innerHTML = data["temp"]
+	      document.getElementById("reasons").innerHTML = data["reasons"]
+	      document.getElementById("recommend").innerHTML = data["recommend"]
+	      document.getElementById("no2").innerHTML = data["no2"]
+	      document.getElementById("tr_pm2_5").style.backgroundColor = 'white'
+	      if(data["pm2_5"] > 25) document.getElementById("tr_pm2_5").style.backgroundColor = 'yellow'
+	      document.getElementById("tr_pm10").style.backgroundColor = 'white'
+	      if(data["pm10"] > 50) document.getElementById("tr_pm10").style.backgroundColor = 'yellow'
+	      document.getElementById("tr_o3").style.backgroundColor = 'white'
+	      if(data["o3"] > 120) document.getElementById("tr_o3").style.backgroundColor = 'red'
+	      document.getElementById("tr_aqi").style.backgroundColor = 'white'
+	      if(data["aqi"] > 0 && data["aqi"] <= 50) document.getElementById("tr_aqi").style.backgroundColor = '#73AD21'
+	      if(data["aqi"] > 50 && data["aqi"] <= 100) document.getElementById("tr_aqi").style.backgroundColor = 'yellow'
+	      if(data["aqi"] > 100 && data["aqi"] <= 150) document.getElementById("tr_aqi").style.backgroundColor = '#FF8A71'
+	      if(data["aqi"] > 150 && data["aqi"] <= 200) document.getElementById("tr_aqi").style.backgroundColor = 'red'
+	      if(data["aqi"] > 200 && data["aqi"] <= 300) document.getElementById("tr_aqi").style.backgroundColor = '#BE71FF'
+	      if(data["aqi"] > 300 && data["aqi"] <= 500) document.getElementById("tr_aqi").style.backgroundColor = '#755570'
+	      document.getElementById("tr_no2").style.backgroundColor = 'white'
+	      if(data["no2"] >= 200) document.getElementById("tr_no2").style.backgroundColor = 'yellow'
+	      $('body').css('background-image', 'url(' + data['background'] + ')');
+	    } else {
+	      console.log(this.response)
+	    }
+	  }
+	  request.send()
+	}
+
+	$(document).ready(function() {
+      $("#city").selectmenu({
+          change: function( event, ui ) {
+              reload_data()
+          }
+      });
+      reload_data();
+	  //setInterval(reload_data, 10000);
+	});
+  </script>
+  </body>
+</html>
