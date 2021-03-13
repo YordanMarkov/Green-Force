@@ -13,7 +13,7 @@ cities = {
         'waqi': 'paris'
     },
     'london': {
-        'weather': 1006984,
+        'weather': 7535661,
         'waqi': 'london'
     },
     'rio_de_janeiro': {
