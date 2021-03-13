@@ -107,7 +107,7 @@
             <th style="color:white;border-radius: 5px; font-weight: bold; font-family:verdana;">Кампании</th>
           </tr>
           <tr style="background-color: white;opacity: 0.7; font-weight: bold; font-family:verdana; font-size:25px;">
-            <td style="height: 680px; vertical-align: top;">
+            <td style="height: 300px; vertical-align: top;">
               <a href = "https://climateandhealthalliance.org/donate/"; style="text-decoration: none; color: #1F8E61; font-weight: bold;">The Global Climate & Health Alliance<br></a>
               <a href = "https://greenbalkans.org/"; style="text-decoration: none; color: #1F8E61;">Green Balkans - България<br></a>
               <a href = "https://www.blf.org.uk/take-action/clean-air"; style="text-decoration: none; color: #1F8E61;">British Lung Foundation - Великобритания<br></a>
@@ -117,6 +117,11 @@
               <a href = "https://www.1jpn.org/donations.html"; style="text-decoration: none; color: #1F8E61;">Natural & Cultural Fund - Япония<br></a>
               <a href = "https://www.tnc.org.hk/en-hk/donate/how-to-give/"; style="text-decoration: none; color: #1F8E61;">The Nature Conservancy - Китай<br></a>
               <a href = "http://russiancarbon.org/"; style="text-decoration: none; color: #1F8E61;">Russian Carbon Fund - Русия<br></a>
+            </td>
+          </tr>
+          <tr style="background-color: #73AD21;">
+            <td style="text-align: center">
+              <img id="photo" src="web/actions/Hands-Dirty.jpg" style="max-width:600px;"/>
             </td>
           </tr>
         </table>
@@ -178,6 +183,20 @@
 	  request.send()
 	}
 
+    function reload_photo() {
+	  var request = new XMLHttpRequest()
+	  request.open('GET', 'http://' + location.host + '/photo', true)
+	  request.onload = function() {
+	    if (request.status >= 200 && request.status < 400) {
+	      var data = JSON.parse(this.response)
+	      document.getElementById('photo').src = data['photo']
+	    } else {
+	      console.log(this.response)
+	    }
+	  }
+	  request.send()
+	}
+
 	$(document).ready(function() {
       $("#city").selectmenu({
           change: function( event, ui ) {
@@ -185,7 +204,7 @@
           }
       });
       reload_data();
-	  //setInterval(reload_data, 10000);
+	  setInterval(reload_photo, 10000);
 	});
   </script>
   </body>
